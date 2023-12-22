@@ -17,6 +17,8 @@ const kBgWhite = Color(0xFFf8f8f8);
 const kBgWhite2 = Color(0XFFf2f2f2);
 const kGrey = Color(0xFF595959);
 const kInactiveColor = Color(0xFFa6a6a6);
+const kInactiveColor2 = Color(0xFFeaecf0);
+
 
 const kIconTheme = IconThemeData(
   color: kPrimaryColor,
