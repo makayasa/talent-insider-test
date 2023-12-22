@@ -86,3 +86,32 @@ void showToast(message, {bgColor, txtColor, ToastGravity gravity = ToastGravity.
     fontSize: 12.0,
   );
 }
+
+bool isEmpty(dynamic val) {
+  return [
+    "",
+    " ",
+    null,
+    'null',
+    '{}',
+    '[]',
+    '0',
+    '0.0',
+    '-1',
+  ].contains(val.toString());
+}
+
+bool isNotEmpty(dynamic val) {
+  return ![
+    "",
+    " ",
+    null,
+    'null',
+    '{}',
+    '[]',
+    '0',
+    '0.0',
+    '0.00',
+    '-1',
+  ].contains(val.toString());
+}
