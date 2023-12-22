@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:developer' as dev;
 
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
+
 void logKey([key, content]) {
   String finalLog = '';
   dynamic tempContent = content ?? key;
@@ -24,4 +28,61 @@ void logKey([key, content]) {
   } else {
     dev.log(finalLog);
   }
+}
+
+double doubleParse(args) {
+  try {
+    if (args is double) {
+      return args;
+    } else if (args is String) {
+      return double.parse(args);
+    } else {
+      return double.parse(args.toString());
+    }
+  } catch (e) {
+    return 0;
+  }
+}
+
+int intParse(args) {
+  try {
+    if (args is int) {
+      return args;
+    } else if (args is String) {
+      return int.parse(args);
+    } else {
+      return int.parse(args.toString());
+    }
+  } catch (e) {
+    return 0;
+  }
+}
+
+String currencyFormat(dynamic number) {
+  try {
+    if (number is String) {
+      number = number.replaceAll(',', '');
+      return NumberFormat("#,##0", "en_US").format(doubleParse(number));
+    }
+    if (number is double || number is int) {
+      return NumberFormat("#,##0", "en_US").format(number);
+    }
+    return '-';
+  } catch (e) {
+    logKey('Error currencyFormat', e);
+    return '-';
+  }
+}
+
+void showToast(message, {bgColor, txtColor, ToastGravity gravity = ToastGravity.BOTTOM}) {
+  Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: gravity,
+    timeInSecForIosWeb: 1,
+    backgroundColor: bgColor,
+    // ?? kPrimaryColor,
+    textColor: txtColor ?? Colors.white,
+    fontSize: 12.0,
+  );
 }
