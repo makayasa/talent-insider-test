@@ -115,3 +115,16 @@ bool isNotEmpty(dynamic val) {
     '-1',
   ].contains(val.toString());
 }
+
+String dateFormater(
+  dynamic date, {
+  String dateFormat = "EEEE, dd MMMM - HH:mm",
+}) {
+  if (date is String) {
+    return DateFormat(dateFormat, 'id').format(DateTime.parse(date));
+  }
+  if (date is DateTime) {
+    return DateFormat(dateFormat, 'id').format(date);
+  }
+  return '';
+}
