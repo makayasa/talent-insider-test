@@ -1,8 +1,11 @@
 # skeleton
 
-A new Flutter project.
+Skeleton for new Flutter Project
 
 ## Getting Started
+
+To rename the project and company name use rename package
+[read here](https://pub.dev/packages/rename)
 
 This project is a starting point for a Flutter application.
 
