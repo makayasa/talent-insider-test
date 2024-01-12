@@ -49,19 +49,6 @@ class MyClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     double w = size.width;
     double h = size.height;
-    // Path path_0 = Path();
-    // path_0.moveTo(size.width * -0.0020000, size.height * 0.0050000);
-    // path_0.quadraticBezierTo(size.width * 0.0767000, size.height * 0.1552500, size.width * 0.0864000, size.height * 0.2520000);
-    // path_0.cubicTo(
-    //     size.width * 0.0687000, size.height * 0.3932500, size.width * 0.0189000, size.height * 0.4437500, size.width * 0.0460000, size.height * 0.6050000);
-    // path_0.cubicTo(
-    //     size.width * 0.0645000, size.height * 0.7077500, size.width * 0.1479000, size.height * 0.6852500, size.width * 0.1088000, size.height * 0.8080000);
-    // path_0.quadraticBezierTo(size.width * 0.0636000, size.height * 0.9705000, 0, size.height * 1.0100000);
-    // path_0.lineTo(size.width, size.height);
-    // path_0.lineTo(size.width * 0.9980000, size.height * -0.0100000);
-    // path_0.lineTo(size.width * -0.0020000, size.height * 0.0050000);
-    // path_0.close();
-
     Path path_0 = Path();
     path_0.moveTo(size.width * 0.2012000, size.height * 0.0040000);
     path_0.quadraticBezierTo(size.width * 0.0704000, size.height * 0.0682500, size.width * 0.1292000, size.height * 0.2470000);
