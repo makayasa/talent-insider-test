@@ -19,7 +19,6 @@ const kGrey = Color(0xFF595959);
 const kInactiveColor = Color(0xFFa6a6a6);
 const kInactiveColor2 = Color(0xFFeaecf0);
 
-
 const kIconTheme = IconThemeData(
   color: kPrimaryColor,
 );
@@ -50,6 +49,7 @@ final kPrimaryTheme = ThemeData(
   navigationBarTheme: NavigationBarThemeData(),
 );
 
+
 // const kElevationShadow = BoxShadow(
 //   color: Colors.grey,
 //   offset: Offset(0, 1),
@@ -63,3 +63,4 @@ BoxShadow kElevationShadow({Color color = Colors.grey}) {
     blurRadius: 6.0,
   );
 }
+
