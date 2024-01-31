@@ -5,7 +5,8 @@ import 'color_constants.dart';
 
 TextStyle get kDefaultTextStyle {
   return GoogleFonts.poppins(
-    color: kBgBlack,
+    // color: kBgBlack,
+    color: kBgWhite,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.normal,
   );

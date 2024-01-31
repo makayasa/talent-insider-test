@@ -38,6 +38,7 @@ final kPrimaryTheme = ThemeData(
   ),
   iconTheme: kIconTheme,
   bottomNavigationBarTheme: kBotNavTheme,
+  scaffoldBackgroundColor: Colors.black,
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     backgroundColor: kPrimaryColor,
   ),
