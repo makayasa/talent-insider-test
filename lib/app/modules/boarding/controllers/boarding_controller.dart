@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 class BoardingController extends GetxController {
   final pageController = PageController();
+  // final carouselController = CarouselController();
   final pageIndex = 0.obs;
   @override
   void onInit() {
@@ -17,5 +18,6 @@ class BoardingController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+    pageController.dispose();
   }
 }

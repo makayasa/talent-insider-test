@@ -52,17 +52,14 @@ class MyClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     double w = size.width;
     double h = size.height;
-    Path path_0 = Path();
-    path_0.moveTo(size.width * 0.2012000, size.height * 0.0040000);
-    path_0.quadraticBezierTo(size.width * 0.0704000, size.height * 0.0682500, size.width * 0.1292000, size.height * 0.2470000);
-    path_0.cubicTo(
-        size.width * 0.2280000, size.height * 0.4095000, size.width * 0.1712000, size.height * 0.5905000, size.width * 0.0956000, size.height * 0.6450000);
-    path_0.cubicTo(
-        size.width * 0.0231000, size.height * 0.7162500, size.width * -0.0311000, size.height * 0.9487500, size.width * 0.0440000, size.height * 1.0020000);
-    path_0.quadraticBezierTo(size.width * 0.2830000, size.height * 1.0002500, size.width, size.height * 0.9950000);
-    path_0.lineTo(size.width, size.height * -0.0050000);
-    path_0.lineTo(size.width * 0.2012000, size.height * 0.0040000);
+     Path path_0 = Path();
+    path_0.moveTo(size.width*0.0006182,size.height*0.0006866);
+    path_0.cubicTo(size.width*0.1117334,size.height*0.0008660,size.width*0.2034824,size.height*0.0016731,size.width*0.2721203,size.height*0.0006667);
+    path_0.cubicTo(size.width*0.2187884,size.height*0.0496638,size.width*0.2493298,size.height*0.1554306,size.width*0.1922149,size.height*0.2049858);
+    path_0.cubicTo(size.width*0.1639564,size.height*0.2180397,size.width*0.1087331,size.height*0.2162460,size.width*0.0826433,size.height*0.2029928);
+    path_0.cubicTo(size.width*0.0225662,size.height*0.1560086,size.width*0.0564829,size.height*0.0483883,size.width*0.0006182,size.height*0.0006866);
     path_0.close();
+
     return path_0;
   }
 
@@ -85,16 +82,11 @@ class RPSCustomPainter extends CustomPainter {
       ..strokeJoin = StrokeJoin.miter;
 
     Path path_0 = Path();
-    path_0.moveTo(size.width * -0.0020000, size.height * 0.0050000);
-    path_0.quadraticBezierTo(size.width * 0.0767000, size.height * 0.1552500, size.width * 0.0864000, size.height * 0.2520000);
-    path_0.cubicTo(
-        size.width * 0.0687000, size.height * 0.3932500, size.width * 0.0189000, size.height * 0.4437500, size.width * 0.0460000, size.height * 0.6050000);
-    path_0.cubicTo(
-        size.width * 0.0645000, size.height * 0.7077500, size.width * 0.1479000, size.height * 0.6852500, size.width * 0.1088000, size.height * 0.8080000);
-    path_0.quadraticBezierTo(size.width * 0.0636000, size.height * 0.9705000, 0, size.height * 1.0100000);
-    path_0.lineTo(size.width, size.height);
-    path_0.lineTo(size.width * 0.9980000, size.height * -0.0100000);
-    path_0.lineTo(size.width * -0.0020000, size.height * 0.0050000);
+    path_0.moveTo(size.width * -0.0009091, size.height * 0.0033333);
+    path_0.lineTo(size.width * 0.4542455, size.height * -0.0033333);
+    path_0.lineTo(size.width * 0.3175818, size.height * 0.3349833);
+    path_0.lineTo(size.width * 0.1354545, size.height * 0.3316667);
+    path_0.lineTo(size.width * -0.0009091, size.height * 0.0033333);
     path_0.close();
 
     canvas.drawPath(path_0, paintFill0);
