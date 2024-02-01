@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:skeleton/app/components/default_text.dart';
 import 'package:skeleton/config/color_constants.dart';
 import 'package:skeleton/config/constant.dart';
+import 'package:skeleton/config/function_utils.dart';
 
 import '../controllers/detail_course_controller.dart';
 
@@ -13,10 +14,6 @@ class DetailCourseView extends GetView<DetailCourseController> {
   Widget build(BuildContext context) {
     Get.put(DetailCourseController());
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('DetailCourseView'),
-        centerTitle: true,
-      ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
       //     if (controller.videoController.value.isPlaying) {
@@ -26,62 +23,133 @@ class DetailCourseView extends GetView<DetailCourseController> {
       //     controller.videoController.play();
       //   },
       // ),
-      body: ListView(
-        children: [
-          SizedBox(
-            height: 200,
-            child: Chewie(
-              controller: controller.chewieController,
-            ),
-          ),
-          DefText(
-            'ChatGPT & Midjourney: 23 Ways of Earning Money with AI',
-            color: kBgWhite,
-          ).large,
-          ListView.builder(
-            itemCount: 5,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              final isExpanded = false.obs;
-              final kunci = GlobalKey();
-              return Obx(
-                () => GestureDetector(
-                  onTap: () {
-                    isExpanded.value = !isExpanded.value;
-                  },
-                  child: ChapterCard(
-                    kunci: kunci,
-                    isExpand: isExpanded.value,
-                    index: index,
-                  ),
+      body: GetX<DetailCourseController>(
+        init: DetailCourseController(),
+        builder: (_) {
+          if (controller.isLoading.value) {
+            return SizedBox(
+              height: Get.height,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+          return ListView(
+            children: [
+              GetBuilder<DetailCourseController>(
+                init: DetailCourseController(),
+                id: '1',
+                builder: (_) {
+                  logKey('builder di chewie');
+                  return SizedBox(
+                    height: 200,
+                    child: Chewie(
+                      controller: controller.chewieController,
+                    ),
+                  );
+                },
+              ),
+              Padding(
+                padding: kDefaultScaffoldPadding,
+                child: DefText(
+                  'ChatGPT & Midjourney: 23 Ways of Earning Money with AI',
+                  color: kBgWhite,
+                ).large,
+              ),
+              const SizedBox(height: 10),
+              Container(
+                padding: kDefaultScaffoldPadding,
+                child: DefText(
+                  controller.courseData['category'],
+                  color: kBgWhite,
+                ).normal,
+              ),
+              Container(
+                padding: kDefaultScaffoldPadding,
+                child: Row(
+                  children: [
+                    DefText(
+                      'Created by ${controller.courseData['author']}',
+                      color: kBgWhite,
+                    ).normal,
+                    const Spacer(),
+                    DefText(
+                      'in English',
+                      color: kBgWhite,
+                    ).normal,
+                  ],
                 ),
-              );
-            },
-          ),
-        ],
+              ),
+              const SizedBox(height: 10),
+              Container(
+                padding: kDefaultScaffoldPadding,
+                child: Row(
+                  children: [
+                    DefText(
+                      '${controller.courseData['chapter'].length} ${controller.courseData['chapter'].length > 1 ? 'Chapters' : 'Chapter'}',
+                      color: kBgWhite,
+                    ).normal,
+                    const SizedBox(width: 5),
+                    DefText('|', color: kBgWhite).normal,
+                    const SizedBox(width: 5),
+                    DefText(
+                      'in English',
+                      color: kBgWhite,
+                    ).normal,
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Obx(
+                () => ListView.builder(
+                  itemCount: controller.listChapters.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final isExpanded = false.obs;
+                    final kunci = GlobalKey();
+                    return Obx(
+                      () => GestureDetector(
+                        child: ChapterCard(
+                          kunci: kunci,
+                          isExpand: isExpanded.value,
+                          index: index,
+                          onTap: () {
+                            isExpanded.value = !isExpanded.value;
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 }
 
-class ChapterCard extends StatelessWidget {
+class ChapterCard extends GetView<DetailCourseController> {
   const ChapterCard({
     super.key,
     required this.isExpand,
     required this.index,
     required this.kunci,
+    this.onTap,
   });
   final bool isExpand;
   final int index;
   final GlobalKey kunci;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        HeaderChapter(index: index),
+        HeaderChapter(index: index, onTap: onTap),
         AnimatedContainer(
           duration: kDefaultFastDuration,
           curve: kDefaultCurve,
@@ -98,13 +166,13 @@ class ChapterCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     DefText(
-                      'Chapter 1',
+                      'Chapter ${index + 1}',
                       color: kBgWhite,
                     ).normal,
                     Row(
                       children: [
                         DefText(
-                          '3 Lesson',
+                          '${controller.listChapters[index]['lesson'].length} Lesson',
                           color: kBgWhite,
                         ).normal,
                         const SizedBox(width: 10),
@@ -117,67 +185,80 @@ class ChapterCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 10),
-                DefText(
-                  'Introduction to the ChatGPT  Midjourney asdsadsda asdasdasd asdasd...',
-                  maxLine: 1,
-                  color: kBgWhite,
-                ).semilarge,
+                Obx(
+                  () => DefText(
+                    // 'Introduction to the ChatGPT  Midjourney asdsadsda asdasdasd asdasd...',
+                    controller.listChapters[index]['title'],
+                    maxLine: 1,
+                    color: kBgWhite,
+                  ).semilarge,
+                ),
                 const SizedBox(height: 10),
-                ListView.separated(
-                  // key: kunci,
-                  itemCount: 10,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  separatorBuilder: (context, index) {
-                    // return const SizedBox(height: 10);
-                    return const Divider(
-                      color: kBgWhite,
-                    );
-                  },
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: 28,
-                              width: 28,
-                              color: kInactiveColor,
-                            ),
-                            const SizedBox(width: 10),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                DefText(
-                                  'Lesson $index',
-                                  color: kBgWhite,
-                                ).normal,
-                                // const SizedBox(height: 5),
-                                DefText(
-                                  'Welcome to 23 Ways of Earning Money with AI',
-                                  color: kBgWhite,
-                                ).flex,
-                              ],
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 15),
-                        Row(
-                          children: [
-                            DefText(
-                              '14 mins',
-                              color: kBgWhite,
-                            ).extraSmall,
-                            const Spacer(),
-                            const Icon(
-                              Icons.play_arrow,
-                            ),
-                          ],
-                        )
-                      ],
-                    );
-                  },
+                Obx(
+                  () => ListView.separated(
+                    // key: kunci,
+                    itemCount: controller.listChapters[index]['lesson'].length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    separatorBuilder: (context, index) {
+                      // return const SizedBox(height: 10);
+                      return const Divider(
+                        color: kBgWhite,
+                      );
+                    },
+                    itemBuilder: (context, _index) {
+                      return Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 28,
+                                width: 28,
+                                color: kInactiveColor,
+                              ),
+                              const SizedBox(width: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  DefText(
+                                    // 'Lesson ',
+                                    controller.listChapters[index]['lesson'][_index]['title'],
+                                    color: kBgWhite,
+                                  ).normal,
+                                  // const SizedBox(height: 5),
+                                  DefText(
+                                    'Welcome to 23 Ways of Earning Money with AI',
+                                    color: kBgWhite,
+                                  ).flex,
+                                ],
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 15),
+                          Row(
+                            children: [
+                              DefText(
+                                '14 mins',
+                                color: kBgWhite,
+                              ).extraSmall,
+                              const Spacer(),
+                              IconButton(
+                                onPressed: () {
+                                  controller.playCurrentLesson(
+                                    controller.listChapters[index]['lesson'][_index]['path'].first['url'],
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.play_arrow,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -189,9 +270,9 @@ class ChapterCard extends StatelessWidget {
 }
 
 class HeaderChapter extends StatelessWidget {
-  const HeaderChapter({super.key, required this.index});
-
+  const HeaderChapter({super.key, required this.index, this.onTap});
   final int index;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -202,64 +283,69 @@ class HeaderChapter extends StatelessWidget {
           color: index % 2 == 1 ? Colors.black : Colors.grey,
           // color: Colors.green,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Container(
-                color: index % 2 == 1 ? Colors.black : Colors.grey,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(20),
-                  ),
+        GestureDetector(
+          onTap: onTap,
+          child: SizedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
                   child: Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: index % 2 == 0 ? Colors.black : Colors.grey,
+                    color: index % 2 == 1 ? Colors.black : Colors.grey,
+                    child: ClipRRect(
                       borderRadius: const BorderRadius.only(
-                        // topRight: Radius.elliptical(100, 50),
-                        topRight: Radius.elliptical(100, 100),
+                        topRight: Radius.circular(20),
+                      ),
+                      child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: index % 2 == 0 ? Colors.black : Colors.grey,
+                          borderRadius: const BorderRadius.only(
+                            // topRight: Radius.elliptical(100, 50),
+                            topRight: Radius.elliptical(100, 100),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: index % 2 == 1 ? Colors.black : Colors.grey,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(4.5),
-                  bottomRight: Radius.circular(4.5),
-                ),
-              ),
-              height: 40,
-              width: 120,
-              child: Center(
-                child: Container(
-                  height: 10,
-                  color: index % 2 == 0 ? Colors.black : Colors.grey,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: index % 2 == 1 ? Colors.black : Colors.grey,
-                child: ClipRRect(
-                  child: Container(
-                    height: 40,
-                    decoration: BoxDecoration(
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: index % 2 == 1 ? Colors.black : Colors.grey,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(4.5),
+                      bottomRight: Radius.circular(4.5),
+                    ),
+                  ),
+                  height: 40,
+                  width: 120,
+                  child: Center(
+                    child: Container(
+                      height: 10,
                       color: index % 2 == 0 ? Colors.black : Colors.grey,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.elliptical(100, 100),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    color: index % 2 == 1 ? Colors.black : Colors.grey,
+                    child: ClipRRect(
+                      child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: index % 2 == 0 ? Colors.black : Colors.grey,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.elliptical(100, 100),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ],
     );

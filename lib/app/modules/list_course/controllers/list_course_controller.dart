@@ -26,7 +26,9 @@ class ListCourseController extends GetxController {
   void toDetailCourse(String uuid) async {
     Get.toNamed(
       Routes.DETAIL_COURSE,
-      arguments: {'uuid': uuid},
+      arguments: {
+        'uuid': uuid,
+      },
     );
   }
 
