@@ -1,12 +1,10 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'color_constants.dart';
 
 TextStyle get kDefaultTextStyle {
   return GoogleFonts.poppins(
     // color: kBgBlack,
-    color: kBgWhite,
+    color: Colors.red,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.normal,
   );

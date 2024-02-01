@@ -19,7 +19,7 @@ class DefText {
   DefText(
     this.text, {
     this.maxLine,
-    this.color = kBgBlack,
+    this.color = kBgWhite,
     this.opacity = 1,
     this.fontStyle,
     this.fontWeight,

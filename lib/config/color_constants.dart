@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 // const kPrimaryColorDarker = Color(0XFF9ba284);
 const kPrimaryColor = Color(0xFFc51011);
+const kGoldColor = Color(0xFFffe485);
 // const kPrimaryColor2 = Color(0xFFE9EDC9);
 
 const kSecondaryColor = Color(0xFFffbaba);
@@ -12,7 +13,8 @@ const kSecondaryColor = Color(0xFFffbaba);
 
 const kWhiteMilk = Color(0xFFFEFAE0);
 
-const kBgBlack = Color(0xFF191508);
+// const kBgBlack = Color(0xFF191508);
+const kBgBlack = Color(0xFF222326);
 const kBgWhite = Color(0xFFf8f8f8);
 const kBgWhite2 = Color(0XFFf2f2f2);
 const kGrey = Color(0xFF595959);
@@ -50,7 +52,6 @@ final kPrimaryTheme = ThemeData(
   navigationBarTheme: NavigationBarThemeData(),
 );
 
-
 // const kElevationShadow = BoxShadow(
 //   color: Colors.grey,
 //   offset: Offset(0, 1),
@@ -64,4 +65,3 @@ BoxShadow kElevationShadow({Color color = Colors.grey}) {
     blurRadius: 6.0,
   );
 }
-
