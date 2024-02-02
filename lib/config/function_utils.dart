@@ -74,6 +74,15 @@ String currencyFormat(dynamic number) {
   }
 }
 
+String durationFormat(Duration duration) {
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
+
+  String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+  String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+
+  return '$twoDigitMinutes:$twoDigitSeconds';
+}
+
 void showToast(message, {bgColor, txtColor, ToastGravity gravity = ToastGravity.BOTTOM}) {
   Fluttertoast.showToast(
     msg: message,

@@ -21,7 +21,7 @@ class AppPages {
   AppPages._();
 
   // static const INITIAL = Routes.BOARDING;
-  static const INITIAL = Routes.DETAIL_AUDIO_BOOK;
+  static const INITIAL = Routes.LIST_AUDIO_BOOK;
   // static const INITIAL = Routes.DETAIL_COURSE;
 
   static final routes = [
