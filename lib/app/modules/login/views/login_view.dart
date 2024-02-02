@@ -44,6 +44,7 @@ class LoginView extends GetView<LoginController> {
                 isEmail: true,
                 fieldName: 'email',
                 hint: 'Enter Work E-mail',
+                initialValue: 'test.mobile@gmail.com',
               ),
               const SizedBox(height: 15),
               const LoginField(
@@ -51,6 +52,7 @@ class LoginView extends GetView<LoginController> {
                 isPassword: true,
                 fieldName: 'password',
                 hint: 'Enter Password',
+                initialValue: 'testmobile',
               ),
               const SizedBox(height: 35),
               DefaultButton(
@@ -58,6 +60,9 @@ class LoginView extends GetView<LoginController> {
                 child: Center(
                   child: DefText('Log In', color: kBgWhite).semilarge,
                 ),
+                onTap: () {
+                  controller.login();
+                },
               ),
               const SizedBox(height: 15),
               Row(

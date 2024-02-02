@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:skeleton/config/color_constants.dart';
 
 TextStyle get kDefaultTextStyle {
   return GoogleFonts.poppins(
     // color: kBgBlack,
-    color: Colors.red,
+    color: kBgWhite,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.normal,
   );

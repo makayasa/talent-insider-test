@@ -136,6 +136,7 @@ class BoardingView extends GetView<BoardingController> {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
           ],
         ),
       ),

@@ -37,6 +37,9 @@ final kPrimaryTheme = ThemeData(
   primaryColor: kPrimaryColor,
   appBarTheme: const AppBarTheme(
     color: kPrimaryColor,
+    iconTheme: IconThemeData(
+      color: kBgWhite,
+    ),
   ),
   iconTheme: kIconTheme,
   bottomNavigationBarTheme: kBotNavTheme,
@@ -46,7 +49,8 @@ final kPrimaryTheme = ThemeData(
   ),
   iconButtonTheme: const IconButtonThemeData(
     style: ButtonStyle(
-      iconColor: MaterialStatePropertyAll(kPrimaryColor),
+      // iconColor: MaterialStatePropertyAll(kPrimaryColor),
+      iconColor: MaterialStatePropertyAll(kBgWhite),
     ),
   ),
   navigationBarTheme: NavigationBarThemeData(),

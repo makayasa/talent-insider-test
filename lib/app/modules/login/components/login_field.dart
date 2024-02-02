@@ -13,12 +13,14 @@ class LoginField extends StatelessWidget {
     required this.fieldName,
     this.isPassword = false,
     this.isEmail = false,
+    this.initialValue,
   });
   final String label;
   final String hint;
   final String fieldName;
   final bool isEmail;
   final bool isPassword;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,8 @@ class LoginField extends StatelessWidget {
           // name: 'email',
           name: fieldName,
           obscureText: isPassword,
+          style: kDefaultTextStyle,
+          initialValue: initialValue,
           decoration: InputDecoration(
             // hintText: 'Enter Work E-mail',
             hintText: hint,
