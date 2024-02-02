@@ -15,130 +15,79 @@ class BoardingView extends GetView<BoardingController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(
-        height: Get.height,
-        child: Column(
-          children: [
-            // Flexible(
-            //   child: GestureDetector(
-            //     onTap: () {
-            //       controller.carouselController.nextPage();
-            //     },
-            //     child: Container(
-            //       // height: Get.height,
-            //       color: Colors.lightBlue,
-            //       child: CarouselSlider(
-            //         carouselController: controller.carouselController,
-            //         options: CarouselOptions(
-            //           scrollPhysics: const NeverScrollableScrollPhysics(),
-            //           aspectRatio: 16 / 9,
-            //           enableInfiniteScroll: false,
-            //           viewportFraction: 1,
-
-            //           enlargeCenterPage: true,
-            //           enlargeStrategy: CenterPageEnlargeStrategy.scale,
-            //           enlargeFactor: 0.9,
-            //           animateToClosest: true,
-            //           // disableCenter: true,
-            //           height: double.infinity,
-            //           onPageChanged: (index, reason) {
-            //             controller.pageIndex.value = index;
-            //           },
-            //         ),
-            //         disableGesture: true,
-            //         items: const [
-            //           BoardingItem(
-            //             image: 'assets/boarding-1.png',
-            //             label: 'Upgrade skills,\nShow off credentials!',
-            //             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis  accumsan.',
-            //           ),
-            //           BoardingItem(
-            //             image: 'assets/boarding-2.png',
-            //             label: 'Gain Insights andread Thending Articles',
-            //             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis serun',
-            //           ),
-            //           BoardingItem(
-            //             image: 'assets/boarding-3.png',
-            //             label: 'Attend Events and Expand youir network!',
-            //             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis amet',
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  if (controller.pageController.page == 2) {
-                    Get.offNamed(
-                      Routes.LOGIN,
-                    );
-                    return;
-                  }
-                  controller.pageController.nextPage(
-                    duration: kDefaultDuration,
-                    curve: kDefaultCurve,
+      body: Column(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                if (controller.pageController.page == 2) {
+                  Get.offNamed(
+                    Routes.LOGIN,
                   );
+                  return;
+                }
+                controller.pageController.nextPage(
+                  duration: kDefaultDuration,
+                  curve: kDefaultCurve,
+                );
+              },
+              child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: controller.pageController,
+                onPageChanged: (value) {
+                  controller.pageIndex.value = value;
                 },
-                child: PageView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: controller.pageController,
-                  onPageChanged: (value) {
-                    controller.pageIndex.value = value;
-                  },
-                  children: const [
-                    BoardingItem(
-                      image: 'assets/boarding-1.png',
-                      label: 'Upgrade skills,\nShow off credentials!',
-                      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis  accumsan.',
-                    ),
-                    BoardingItem(
-                      image: 'assets/boarding-2.png',
-                      label: 'Gain Insights andread Thending Articles',
-                      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis serun',
-                    ),
-                    BoardingItem(
-                      image: 'assets/boarding-3.png',
-                      label: 'Attend Events and Expand youir network!',
-                      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis amet',
-                    ),
-                  ],
-                ),
+                children: const [
+                  BoardingItem(
+                    image: 'assets/boarding-1.png',
+                    label: 'Upgrade skills,\nShow off credentials!',
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis  accumsan.',
+                  ),
+                  BoardingItem(
+                    image: 'assets/boarding-2.png',
+                    label: 'Gain Insights andread Thending Articles',
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis serun',
+                  ),
+                  BoardingItem(
+                    image: 'assets/boarding-3.png',
+                    label: 'Attend Events and Expand youir network!',
+                    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis amet',
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 10),
-            Obx(
-              () => DotsIndicator(
-                // dotsCount: controller.pageController.page?.round() ?? 0,
-                dotsCount: 3,
-                position: controller.pageIndex.value,
-              ),
+          ),
+          const SizedBox(height: 10),
+          Obx(
+            () => DotsIndicator(
+              // dotsCount: controller.pageController.page?.round() ?? 0,
+              dotsCount: 3,
+              position: controller.pageIndex.value,
             ),
-            Obx(
-              () => Visibility(
-                visible: controller.pageIndex.value != 2,
-                replacement: const SizedBox(
-                  height: 20,
-                ),
-                child: Padding(
-                  padding: kDefaultScaffoldPadding,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: SizedBox(
-                        height: 20,
-                        child: DefText('Skip', color: kBgWhite).semilarge,
-                      ),
+          ),
+          Obx(
+            () => Visibility(
+              visible: controller.pageIndex.value != 2,
+              replacement: const SizedBox(
+                height: 20,
+              ),
+              child: Padding(
+                padding: kDefaultScaffoldPadding,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: SizedBox(
+                      height: 20,
+                      child: DefText('Skip', color: kBgWhite).semilarge,
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-          ],
-        ),
+          ),
+          const SizedBox(height: 20),
+        ],
       ),
     );
   }
